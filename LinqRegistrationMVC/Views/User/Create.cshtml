@@ -1,0 +1,53 @@
+﻿@model LinqRegistrationMVC.Models.User
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow-custom p-4">
+
+            <h2 class="text-center mb-4">User Registration</h2>
+
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Full Name</label>
+                    @Html.TextBoxFor(m => m.Name,
+                        new { @class = "form-control form-control-lg", placeholder = "Enter full name" })
+                    @Html.ValidationMessageFor(m => m.Name, "",
+                        new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Email Address</label>
+                    @Html.TextBoxFor(m => m.Email,
+                        new { @class = "form-control form-control-lg", placeholder = "Enter email address" })
+                    @Html.ValidationMessageFor(m => m.Email, "",
+                        new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Password</label>
+                    @Html.PasswordFor(m => m.Password,
+                        new { @class = "form-control form-control-lg", placeholder = "Enter password" })
+                    @Html.ValidationMessageFor(m => m.Password, "",
+                        new { @class = "text-danger small" })
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success px-4">
+                        Register
+                    </button>
+
+                    @Html.ActionLink("Back to List",
+                        "Index",
+                        null,
+                        new { @class = "btn btn-outline-secondary px-4" })
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>

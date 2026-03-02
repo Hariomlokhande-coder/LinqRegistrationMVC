@@ -1,0 +1,113 @@
+﻿@model List<LinqRegistrationMVC.Models.User>
+
+<div class="card shadow-custom p-4">
+
+    <h2 class="text-center mb-4">Registered Users</h2>
+
+    <!-- SEARCH BAR -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        @using (Html.BeginForm("Index", "User", FormMethod.Get))
+        {
+            <div class="input-group" style="max-width:350px;">
+                <input type="text"
+                       name="search"
+                       placeholder="Search by name..."
+                       class="form-control" />
+
+                <button type="submit" class="btn btn-primary">
+                    Search
+                </button>
+            </div>
+        }
+
+        @Html.ActionLink("Register New User",
+            "Create",
+            null,
+            new { @class = "btn btn-success" })
+    </div>
+
+    <!-- STATS SECTION -->
+    <div class="row text-center mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h6>Total Users</h6>
+                <h4 class="text-primary">@ViewBag.TotalUsers</h4>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h6>First User</h6>
+                <h5>@ViewBag.FirstUserName</h5>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h6>All Emails Valid</h6>
+                <h5 class="@(ViewBag.AllValidEmails ? "text-success" : "text-danger")">
+                    @ViewBag.AllValidEmails
+                </h5>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- EMAIL DOMAIN SUMMARY -->
+    @if (ViewBag.GroupData != null)
+    {
+        var groups = (List<LinqRegistrationMVC.Models.EmailGroup>)ViewBag.GroupData;
+
+        <div class="card shadow-sm p-3 mb-4">
+            <h5>Email Domain Summary</h5>
+            <ul class="list-group list-group-flush">
+                @foreach (var g in groups)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@g.Domain</span>
+                        <span class="badge bg-primary">@g.Total</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+    <!-- USERS TABLE -->
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th style="width:180px;">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>
+                            @Html.ActionLink("Edit",
+                                "Edit",
+                                new { id = item.Id },
+                                new { @class = "btn btn-warning btn-sm me-2" })
+
+                            @Html.ActionLink("Delete",
+                                "Delete",
+                                new { id = item.Id },
+                                new { @class = "btn btn-danger btn-sm" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
